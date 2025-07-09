@@ -2,7 +2,7 @@
 
 ## Core Principles
 
-Before we document any patterns, we must define the "laws of physics" for our new world. These principles are the foundation upon which all Promethean Patterns are built.
+Before documenting any patterns, it's essential to define the "laws of physics" for this new world. These principles are the foundation upon which all Promethean Patterns are built.
 
 ### 1. Principle of the LLM as a Compute Primitive
 
@@ -159,7 +159,7 @@ By following these principles, you build systems that are:
 
 ## The Path Forward
 
-These principles form the foundation of the Promethean Patterns catalog. Each pattern in our collection respects these principles while solving specific orchestration challenges.
+These principles form the foundation of the Promethean Patterns catalog. Each pattern in this collection respects these principles while solving specific orchestration challenges.
 
 As you implement these patterns, always return to these principles. They are your North Star in the emerging field of LLM orchestration.
 

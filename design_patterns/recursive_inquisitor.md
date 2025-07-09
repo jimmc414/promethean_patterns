@@ -26,7 +26,7 @@ Use this pattern when:
 -   The process must have a clear, AI-driven termination condition.
 
 **Examples:**
--   **Startup Idea Consultant:** Taking a one-sentence idea and developing it into a mini-business plan (our reference implementation).
+-   **Startup Idea Consultant:** Taking a one-sentence idea and developing it into a mini-business plan (the reference implementation).
 -   **AI-Powered Debugger:** Starting with an error message ("database connection failed") and recursively asking for more information (log files, config files, network status) until a root cause is identified.
 -   **Medical Triage Bot:** Taking an initial symptom from a patient and asking a series of targeted questions to assess urgency and recommend a next step (e.g., "See a doctor," "Rest at home").
 -   **Custom Travel Itinerary Planner:** Guiding a user from "I want to go to Italy for a week" to a fully detailed day-by-day travel plan.
@@ -62,7 +62,7 @@ The pattern functions as a state machine managed by the Orchestrator, with the s
 3.  **Prompt Assembly:** The Orchestrator injects the entire current State Object into the master Prompt.
 4.  **LLM Invocation:** The Orchestrator sends the prompt to the LLM.
 5.  **Response & Validation:** The Orchestrator receives the JSON response. It validates that the JSON is well-formed and contains a valid `next_action`. This is a critical `PROBABILISTIC_RESILIENCE` checkpoint.
-6.  **State Transition & Update:** The Orchestrator reads the `updated_state` field from the LLM's response. This field becomes the *new, complete* State Object for the next iteration. This step is crucial; we trust the LLM's view of the newly integrated state.
+6.  **State Transition & Update:** The Orchestrator reads the `updated_state` field from the LLM's response. This field becomes the *new, complete* State Object for the next iteration. This step is crucial; the system trusts the LLM's view of the newly integrated state.
 7.  **Action Execution:** The Orchestrator inspects the `next_action` field:
     -   If `"ask"`, it extracts the `question_for_user` and presents it. It then waits for user input, looping back to Step 2.
     -   If `"conclude"`, it extracts the `refined_pitch`, presents the final result to the user, and terminates the loop.
@@ -77,12 +77,12 @@ The pattern functions as a state machine managed by the Orchestrator, with the s
 
 -   **Trade-offs / Risks:**
     -   `Context Window Bottleneck:` This is the primary risk. For extremely complex or lengthy refinements, the JSON state object could grow to exceed the model's context window. Mitigation strategies could include summarizing older, "refined" fields.
-    -   `Potential for Loops:` A poorly designed prompt could cause the LLM to get stuck, asking similar questions repeatedly. The Orchestrator should include an iteration limit (as our script does) as a failsafe.
+    -   `Potential for Loops:` A poorly designed prompt could cause the LLM to get stuck, asking similar questions repeatedly. The Orchestrator should include an iteration limit (as the script does) as a failsafe.
     -   `Prompt Brittleness:` The system's performance is highly dependent on the quality of the master prompt. Small changes to the prompt can have a large impact on behavior, requiring careful testing.
 
 ## 6. Reference Implementation
 
-The `idea_consultant.sh` script and its accompanying prompt that we developed serves as the official reference implementation for this pattern. The key components are:
+The `idea_consultant.sh` script and its accompanying prompt serves as the official reference implementation for this pattern. The key components are:
 
 -   **`run.sh`:** The `idea_consultant.sh` script containing the `while` loop, user I/O handling, and `claude` command invocation.
 -   **`prompt.txt`:** The multi-line string variable `PROMPT` within the script.
